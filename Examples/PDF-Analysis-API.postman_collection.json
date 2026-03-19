@@ -1,0 +1,159 @@
+{
+  "info": {
+    "name": "PDF Analysis API with Gemini 2.0",
+    "description": "Collection for testing PDF analysis endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Analyze PDF Document",
+   "request": {
+        "method": "POST",
+        "header": [],
+    "body": {
+          "mode": "formdata",
+   "formdata": [
+            {
+          "key": "file",
+       "type": "file",
+       "src": "/path/to/your/document.pdf",
+ "description": "The PDF file to analyze"
+ },
+     {
+ "key": "prompt",
+   "value": "What is the main topic of this document?",
+              "type": "text",
+"description": "Your question about the PDF"
+   }
+]
+        },
+    "url": {
+          "raw": "{{baseUrl}}/api/PdfAnalysis/analyze",
+          "host": ["{{baseUrl}}"],
+ "path": ["api", "PdfAnalysis", "analyze"]
+        },
+ "description": "Upload a PDF and ask questions about its content"
+      },
+ "response": [
+        {
+    "name": "Success Response",
+  "originalRequest": {
+"method": "POST",
+          "header": [],
+    "body": {
+      "mode": "formdata",
+         "formdata": [
+    {
+          "key": "file",
+              "type": "file",
+             "src": "document.pdf"
+                },
+       {
+  "key": "prompt",
+   "value": "What is the main topic?",
+        "type": "text"
+   }
+       ]
+  },
+        "url": {
+       "raw": "{{baseUrl}}/api/PdfAnalysis/analyze",
+              "host": ["{{baseUrl}}"],
+      "path": ["api", "PdfAnalysis", "analyze"]
+     }
+          },
+          "status": "OK",
+          "code": 200,
+  "_postman_previewlanguage": "json",
+          "header": [
+      {
+     "key": "Content-Type",
+   "value": "application/json"
+            }
+      ],
+    "body": "{\n  \"success\": true,\n  \"answer\": \"The main topic of this document is...\",\n  \"errorMessage\": null,\n  \"fileName\": \"document.pdf\",\n  \"pageCount\": 10\n}"
+    },
+        {
+      "name": "Question Not Relevant",
+          "originalRequest": {
+       "method": "POST",
+   "header": [],
+          "body": {
+              "mode": "formdata",
+     "formdata": [
+ {
+          "key": "file",
+      "type": "file",
+       "src": "document.pdf"
+       },
+      {
+   "key": "prompt",
+  "value": "What's the weather today?",
+"type": "text"
+                }
+   ]
+   },
+            "url": {
+    "raw": "{{baseUrl}}/api/PdfAnalysis/analyze",
+        "host": ["{{baseUrl}}"],
+         "path": ["api", "PdfAnalysis", "analyze"]
+            }
+          },
+       "status": "Bad Request",
+ "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+       "key": "Content-Type",
+"value": "application/json"
+            }
+    ],
+          "body": "{\n  \"success\": false,\n  \"answer\": \"I can only answer questions related to the content of the uploaded PDF document. Your question appears to be outside the scope of this document.\",\n  \"errorMessage\": \"Question not relevant to document\",\n  \"fileName\": \"document.pdf\",\n  \"pageCount\": 10\n}"
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+ "url": {
+    "raw": "{{baseUrl}}/api/PdfAnalysis/health",
+  "host": ["{{baseUrl}}"],
+          "path": ["api", "PdfAnalysis", "health"]
+        },
+        "description": "Check if the API is running"
+      },
+      "response": [
+        {
+          "name": "Healthy",
+          "originalRequest": {
+            "method": "GET",
+       "header": [],
+    "url": {
+   "raw": "{{baseUrl}}/api/PdfAnalysis/health",
+     "host": ["{{baseUrl}}"],
+            "path": ["api", "PdfAnalysis", "health"]
+ }
+ },
+     "status": "OK",
+   "code": 200,
+    "_postman_previewlanguage": "json",
+    "header": [
+   {
+      "key": "Content-Type",
+       "value": "application/json"
+            }
+],
+          "body": "{\n  \"status\": \"Healthy\",\n\"timestamp\": \"2024-01-01T12:00:00Z\"\n}"
+        }
+    ]
+    }
+  ],
+  "variable": [
+  {
+  "key": "baseUrl",
+      "value": "https://localhost:7xxx",
+      "type": "string"
+    }
+  ]
+}
