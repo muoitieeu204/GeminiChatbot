@@ -54,3 +54,5 @@ artifacts/
 *.log
 *.tmp
 *.temp
+/API/appsettings.json
+/API/appsettings.json
